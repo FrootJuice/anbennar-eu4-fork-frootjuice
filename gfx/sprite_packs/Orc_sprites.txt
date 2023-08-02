@@ -215,8 +215,14 @@ grombar_sprite_pack = {
 black_orc_sprite_pack = {
 	# Tests against every tag in game
 	country_trigger = {
-		OR = {
+		OR = { #Don't touch the OR or it breaks and you get default Western Unit Sprites. -FrootJuice
 			primary_culture = black_orc
+			AND = {
+				has_country_modifier = orcish_military
+				capital_scope = {
+					continent = serpentspine
+				}
+			}	
 		}
 	}
 

@@ -955,7 +955,10 @@ bluefoot_sprite_pack = {
 group_dwarves_sprite_pack = {
 	# Tests against every tag in game
 	country_trigger = {
-		culture_group = dwarven
+		OR = { #FIGURED IT OUT! It needs to be defined by culture on game start, but reloading saves or exit to menu then loading it will see other triggers. -FrootJuice
+			culture_group = dwarven
+			has_country_modifier = dwarven_military
+		}	
 	}
 
 	sprite_infantry = {
@@ -1040,9 +1043,17 @@ exodus_goblin_sprite_pack = {
 cave_goblin_sprite_pack = {
 	# Tests against every tag in game
 	country_trigger = {
-		OR = {
-			dwarovar_goblin_culture_primary = yes
-			primary_culture = march_goblin
+		OR = { #Removing this OR seems to just make them default Western. So no touch. -FrootJuice
+			OR = {
+				dwarovar_goblin_culture_primary = yes
+				primary_culture = march_goblin
+			}	
+				AND = {
+					has_country_modifier = goblin_military
+					capital_scope = {
+						continent = serpentspine
+					}
+				}	
 		}
 	}
 
