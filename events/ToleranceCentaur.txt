@@ -81,6 +81,20 @@ country_event = {
 				}
 				country_event = { id = centaur_tolerance_events.3 }
 			}
+			#centaur minister
+			10 = {
+				modifier = {
+					factor = 1.5
+					medium_tolerance_centaur_race_trigger = yes
+				}
+				modifier = {
+					factor = 2
+					high_tolerance_centaur_race_trigger = yes
+				}
+				country_event = {
+					id = centaur_tolerance_events.4
+				}
+			}
 		}
 	}
 }
@@ -295,5 +309,154 @@ country_event = {
 		
 		clear_racial_pop_tolerance_chance_flags = yes
 		
+	}
+}
+
+
+# centaur wayfarer (centaur minister)
+country_event = {
+	id = centaur_tolerance_events.4
+	title = centaur_tolerance_events.4.t
+	desc = centaur_tolerance_events.4.d
+	picture = ADVISOR_eventPicture
+	
+	is_triggered_only = yes
+
+	# If you have a centaur culture province, that's the one the advisor comes from
+	immediate = {
+		hidden_effect = {
+			if = {
+				limit = {
+					any_owned_province = {
+						culture_group = centaur
+					}
+				}
+				random_owned_province = {
+					limit = { culture_group = centaur }
+					save_event_target_as = centaur_advisor_culture_province
+				}
+				set_country_flag = centaur_advisor_culture_set
+			}
+		}
+	}
+
+	# Recruit the centaur
+	option = {
+		name = centaur_tolerance_events.4.a
+		ai_chance = {
+			factor = 50
+			modifier = {
+				factor = 0.5
+				wants_to_maintain_tolerance_centaur = yes
+			}
+			modifier = {
+				factor = 0.1
+				wants_to_decrease_tolerance_centaur = yes
+			}
+		}
+		small_increase_of_centaur_tolerance_effect = yes
+		if = {
+			limit = { has_country_flag = centaur_advisor_culture_set }
+			if = {
+				limit = { monthly_income = 50 }
+				random_list = {
+					1 = {
+						define_advisor = {
+							type = trader
+							culture = event_target:centaur_advisor_culture_province
+							religion = event_target:centaur_advisor_culture_province
+							skill = 3
+							
+							discount = yes
+						}
+					}
+					1 = {
+						define_advisor = {
+							type = grand_captain
+							culture = event_target:centaur_advisor_culture_province
+							religion = event_target:centaur_advisor_culture_province
+							skill = 3
+							
+							discount = yes
+						}
+					}
+				}
+			}
+			else_if = {
+				limit = { monthly_income = 25 }
+				random_list = {
+					1 = {
+						define_advisor = {
+							type = trader
+							culture = event_target:centaur_advisor_culture_province
+							religion = event_target:centaur_advisor_culture_province
+							skill = 2							
+							discount = yes
+						}
+					}
+					1 = {
+						define_advisor = {
+							type = grand_captain
+							culture = event_target:centaur_advisor_culture_province
+							religion = event_target:centaur_advisor_culture_province
+							skill = 2							
+							discount = yes
+						}
+					}
+				}
+			}
+			else = {
+				random_list = {
+					1 = {
+						define_advisor = {
+							type = trader
+							culture = event_target:centaur_advisor_culture_province
+							religion = event_target:centaur_advisor_culture_province
+							skill = 1
+							discount = yes
+						}
+					}
+					1 = {
+						define_advisor = {
+							type = grand_captain
+							culture = event_target:centaur_advisor_culture_province
+							religion = event_target:centaur_advisor_culture_province
+							skill = 1							
+							discount = yes
+						}
+					}
+				}
+			}
+		}
+	}
+
+	# A true exemplar of their race
+	option = {
+		name = centaur_tolerance_events.4.b
+		ai_chance = {
+			factor = 50
+			modifier = {
+				factor = 2
+				wants_to_increase_tolerance_centaur = yes
+			}
+		}
+		medium_increase_of_centaur_tolerance_effect = yes
+	}
+
+	# Go away silly horse person
+	option = {
+		name = centaur_tolerance_events.4.c
+		ai_chance = {
+			factor = 50
+			modifier = {
+				factor = 2
+				wants_to_decrease_tolerance_centaur = yes
+			}
+		}
+		small_decrease_of_centaur_tolerance_effect = yes
+	}
+
+	after = {
+		clr_country_flag = centaur_advisor_culture_set
 	}
 }
