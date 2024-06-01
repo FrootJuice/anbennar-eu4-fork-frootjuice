@@ -95,6 +95,129 @@ country_event = {
 					id = centaur_tolerance_events.4
 				}
 			}
+			#migrating centaurs trample fields
+			10 = {
+				modifier = {
+					factor = 2
+					low_tolerance_centaur_race_trigger = yes
+				}
+				modifier = {
+					factor = 1.5
+					medium_tolerance_centaur_race_trigger = yes
+				}
+				country_event = {
+					id = centaur_tolerance_events.5
+				}
+			}
+			#centaur haulers outperform beasts of burden
+			10 = {
+				modifier = {
+					factor = 2
+					medium_tolerance_centaur_race_trigger = yes
+				}
+				modifier = {
+					factor = 0
+					NOT = { # factor 0 and NOT means this event will not fire if I don't have both the AND varibles below right? Too many logic fuctions here and I feel like I'm messing up.
+						any_owned_province = { # Has an "agricultural" trade good AND a Centaur minority present
+							AND = {
+								has_centaur_minority_trigger = yes
+								OR = {
+									trade_goods = grain
+									trade_goods = fish
+									trade_goods = livestock
+									trade_goods = salt
+									trade_goods = wine
+									trade_goods = wool
+									trade_goods = ivory
+									trade_goods = spices
+									trade_goods = tea
+									trade_goods = cocoa
+									trade_goods = coffee
+									trade_goods = cotton
+									trade_goods = sugar
+									trade_goods = tobacco
+									trade_goods = cloves
+									trade_goods = fungi
+									trade_goods = serpentbloom
+								}	
+							}	 
+						}
+					}	
+				}
+			}
+			#same day shipping
+			10 = {
+				modifier = {
+					factor = 1.5
+					medium_tolerance_centaur_race_trigger = yes
+				}
+				modifier = {
+					factor = 2
+					high_tolerance_centaur_race_trigger = yes
+				}
+				modifier = {
+					factor = 0
+					NOT = {
+						has_estate = estate_burghers
+					}	 
+				}
+			}
+			#urbanizing centaurs
+			10 = {
+				modifier = {
+					factor = 1.5
+					medium_tolerance_centaur_race_trigger = yes
+				}
+				modifier = {
+					factor = 2
+					high_tolerance_centaur_race_trigger = yes
+				}
+				AND = {
+					development = 15
+					has_centaur_minority_trigger = yes
+				}
+			}
+			#bandit and steed ravage countryside
+			10 = {
+				modifier = {
+					factor = 2
+					low_tolerance_centaur_race_trigger = yes
+				}
+				modifier = {
+					factor = 0
+					high_tolerance_centaur_race_trigger = yes
+				}
+			}
+			#centaur festival disrupts peace and tranquility
+			10 = {
+				modifier = { #n/a modifiers
+					factor = 1
+				}
+			}
+			#centaur traders approach markets
+			10 = {
+				modifier = {
+					factor = 1.5
+					medium_tolerance_centaur_race_trigger = yes
+				}
+				modifier = {
+					factor = 2
+					trade_income_percentage = 0.30
+				}
+			}
+			#noble attempts to ride centaur
+			10 = {
+				modifier = {
+					factor = 0.5
+					high_tolerance_centaur_race_trigger = yes #probably less likely to occur if your people are already well integrated with Centaurs
+				}
+				modifier = {
+					factor = 0
+					NOT = {
+						has_estate = estate_nobles #needs nobles estate to have the "X ride the Y"
+					}	
+				}
+			}
 		}
 	}
 }
@@ -458,5 +581,553 @@ country_event = {
 
 	after = {
 		clr_country_flag = centaur_advisor_culture_set
+	}
+}
+
+
+# Migrating Centaurs Trample Fields
+country_event = {
+	id = centaur_tolerance_events.5
+	title = centaur_tolerance_events.5.t
+	desc = centaur_tolerance_events.5.d
+	picture = todo
+	
+	is_triggered_only = yes
+
+	# Codify a common right of passage for the province
+	option = {
+		name = centaur_tolerance_events.5.a
+		ai_chance = {
+			factor = 1
+			modifier = {
+				factor = 1
+				wants_to_maintain_tolerance_centaur = yes
+			}
+			modifier = {
+				factor = 0.5
+				wants_to_decrease_tolerance_centaur = yes
+			}
+			modifier = {
+				factor = 2
+				wants_to_increase_tolerance_centaur = yes
+			}
+		}
+		add_province_modifier todo
+	}
+
+	# Mandate that the Centaurs leave the area
+	option = {
+		name = centaur_tolerance_events.5.b
+		ai_chance = {
+			factor = 1
+			modifier = {
+				factor = 1
+				wants_to_maintain_tolerance_centaur = yes
+			}
+			modifier = {
+				factor = 2
+				wants_to_decrease_tolerance_centaur = yes
+			}
+			modifier = {
+				factor = 0
+				wants_to_increase_tolerance_centaur = yes
+			}	
+		}
+		small_decrease_of_centaur_tolerance_effect = yes
+	}
+
+	# Protect the Landlords and Punish the Vandals
+	option = {
+		name = centaur_tolerance_events.5.c
+		ai_chance = {
+			factor = 1
+			modifier = {
+				factor = 2
+				wants_to_maintain_tolerance_centaur = yes
+			}
+			modifier = {
+				factor = 5
+				wants_to_decrease_tolerance_centaur = yes
+			}
+			modifier = {
+				factor = 0
+				wants_to_increase_tolerance_centaur = yes
+			}
+		}	
+		add_adm_power = 50
+		large_decrease_of_centaur_tolerance_effect = yes
+	}
+}
+
+
+# Centaur Haulers Outperform Beasts of Burden
+country_event = {
+	id = centaur_tolerance_events.6
+	title = centaur_tolerance_events.6.t
+	desc = centaur_tolerance_events.6.d
+	picture = todo
+	
+	is_triggered_only = yes
+
+	# Subsidize the ranches and protect centaur laborers
+	option = {
+		name = centaur_tolerance_events.6.a
+		ai_chance = {
+			factor = 1
+			modifier = {
+				factor = 1
+				wants_to_maintain_tolerance_centaur = yes
+			}
+			modifier = {
+				factor = 0
+				wants_to_decrease_tolerance_centaur = yes
+			}
+			modifier = {
+				factor = 5
+				wants_to_increase_tolerance_centaur = yes
+			}
+		}
+		add_years_of_income = -0.25
+		add_province_modifier todo
+		large_increase_of_centaur_tolerance_effect = yes
+	}
+
+	# Conscript the Centaurs into Civil Service without Compensation
+	option = {
+		name = centaur_tolerance_events.6.b
+		ai_chance = {
+			factor = 1
+			modifier = {
+				factor = 1
+				wants_to_maintain_tolerance_centaur = yes
+			}
+			modifier = {
+				factor = 2
+				wants_to_decrease_tolerance_centaur = yes
+			}
+			modifier = {
+				factor = 0
+				wants_to_increase_tolerance_centaur = yes
+			}
+		}
+		add_province_modifier todo #(same modif as option A)
+		small_decrease_of_centaur_tolerance_effect = yes 
+	}
+
+	# Ban the Centaurs from being able to work
+	option = {
+		name = centaur_tolerance_events.6.c
+		ai_chance = {
+			factor = 1
+			modifier = {
+				factor = 1
+				wants_to_maintain_tolerance_centaur = yes
+			}
+			modifier = {
+				factor = 5
+				wants_to_decrease_tolerance_centaur = yes
+			}
+			modifier = {
+				factor = 0
+				wants_to_increase_tolerance_centaur = yes
+			}
+		}
+		add_province_modifier todo #unrest thing. awaitng what Balance says
+		large_decrease_of_centaur_tolerance_effect = yes
+	}
+}
+
+
+# Same Day Shipping
+country_event = {
+	id = centaur_tolerance_events.7
+	title = centaur_tolerance_events.7.t
+	desc = centaur_tolerance_events.7.d
+	picture = todo
+	
+	is_triggered_only = yes
+
+	# Allow Centaurs to Operate normally, even if a few packages are Lost
+	option = {
+		name = centaur_tolerance_events.7.a
+		ai_chance = {
+			factor = 1
+			modifier = {
+				factor = 2
+				wants_to_maintain_tolerance_centaur = yes
+			}
+			modifier = {
+				factor = 1
+				wants_to_decrease_tolerance_centaur = yes
+			}
+			modifier = {
+				factor = 5
+				wants_to_increase_tolerance_centaur = yes
+			}
+		}
+		add_country_modifier = {
+			name = todo  #Centaur Curators (double envoy travel time and -10% trade eff)
+			duration = 60
+		}
+		small_increase_of_centaur_tolerance_effect = yes
+	}
+
+	# Hinder Centaur workers so they don't outpace the Guilds
+	option = {
+		name = centaur_tolerance_events.7.b
+		ai_chance = {
+			factor = 1
+			modifier = {
+				factor = 1
+				wants_to_maintain_tolerance_centaur = yes
+			}
+			modifier = {
+				factor = 5
+				wants_to_decrease_tolerance_centaur = yes
+			}
+			modifier = {
+				factor = 0
+				wants_to_increase_tolerance_centaur = yes
+			}
+		}
+		add_estate_loyalty_modifier = {
+			estate = estate_burghers
+			desc = Centaurs_not_allowed_to_compete_against_Guild_Workers
+			loyalty = 10
+			duration = 1825
+		} 
+		add_estate_influence_modifier = {
+			estate = estate_burghers
+			desc = Centaurs_not_allowed_to_compete_against_Guild_Workers
+			influence = 10
+			duration = 1825
+		}	
+		large_decrease_of_centaur_tolerance_effect = yes
+	}
+
+	# Centaurs work well. Guilds are bad and should learn from them.
+	option = {
+		name = centaur_tolerance_events.7.c
+		ai_chance = {
+			factor = 1
+			modifier = {
+				factor = 2
+				wants_to_maintain_tolerance_centaur = yes
+			}
+			modifier = {
+				factor = 0
+				wants_to_decrease_tolerance_centaur = yes
+			}
+			modifier = {
+				factor = 5
+				wants_to_increase_tolerance_centaur = yes
+			}
+		}
+		add_estate_loyalty_modifier = {
+			estate = estate_burghers
+			desc = Upset_due_to_excellent_Centaur_Work_Ethic
+			loyalty = -10
+			duration = 1825
+		}
+		spawn_rebels = {
+			type = particularist_rebels
+			size = 1
+		}
+		large_increase_of_centaur_tolerance_effect = yes
+	}
+}
+
+
+# Urbanizing Centaurs
+country_event = {
+	id = centaur_tolerance_events.8
+	title = centaur_tolerance_events.8.t
+	desc = centaur_tolerance_events.8.d
+	picture = todo
+	
+	is_triggered_only = yes
+
+	# Mandate new Urban Development Projects
+	option = {
+		name = centaur_tolerance_events.8.a
+		ai_chance = {
+			factor = 1
+			modifier = {
+				factor = 1
+				wants_to_maintain_tolerance_centaur = yes
+			}
+			modifier = {
+				factor = 0
+				wants_to_decrease_tolerance_centaur = yes
+			}
+			modifier = {
+				factor = 2
+				wants_to_increase_tolerance_centaur = yes
+			}
+		}
+		add_years_of_income = -0.5
+		add_province_modifier = {
+			name = Urban_Restructuring_for_Centaurs #-15% province dev cost. todo
+			duration = 1825
+		}
+		small_increase_of_centaur_tolerance_effect = yes
+	}
+
+	# It's too expensive
+	option = {
+		name = centaur_tolerance_events.8.b
+		ai_chance = {
+			factor = 1
+			modifier = {
+				factor = 2
+				wants_to_decrease_tolerance_centaur = yes
+			}
+			modifier = {
+				factor = 0
+				NOT = { years_of_income = 0.5 }
+			}
+		}
+		small_decrease_of_centaur_tolerance_effect = yes
+	}
+}
+
+
+# Bandit and Steed Ravage Countryside
+country_event = {
+	id = centaur_tolerance_events.9
+	title = centaur_tolerance_events.9.t
+	desc = centaur_tolerance_events.9.d
+	picture = todo
+
+	is_triggered_only = yes
+
+	# Diplomatic Solution
+	option = {
+		name = centaur_tolerance_events.9.a
+		ai_chance = {
+			factor = 1
+			modifier = {
+				factor = 5
+				wants_to_increase_tolerance_centaur = yes
+			}
+		}
+		add_dip_power = -100
+		local_autonomy = { 0.2 
+		duration = 1825
+		}
+		large_increase_of_centaur_tolerance_effect = yes
+	}
+
+	# Organize Local Militias
+	option = {
+		name = centaur_tolerance_events.9.b
+		ai_chance = {
+			factor = 1
+			modifier = {
+				factor = 2
+				wants_to_decrease_tolerance_centaur = yes
+			}
+		}
+		add_yearly_manpower = 0.1
+		small_decrease_of_centaur_tolerance_effect = yes
+	}
+
+	# Launch a Counter Attack
+	option = {
+		name = centaur_tolerance_events.9.c
+		ai_chance = {
+			factor = 3
+			modifier = {
+				factor = 5
+				wants_to_decrease_tolerance_centaur = yes
+			}
+		}
+		add_yearly_manpower = -0.2
+		add_years_of_income = -0.1
+		add_army_tradition = 25
+		event_target:target_province = {
+			add_devastation = 40
+		}
+		large_decrease_of_centaur_tolerance_effect = yes
+	}
+}
+
+
+# Centaur Festival Desrupts Peace and Tranquility
+country_event = {
+	id = centaur_tolerance_events.10
+	title = centaur_tolerance_events.10.t
+	desc = centaur_tolerance_events.10.d
+	picture = todo
+
+	is_triggered_only = yes
+
+	# Allow the Festival
+	option = {
+		name = centaur_tolerance_events.10.a
+		ai_chance = {
+			factor = 1
+			modifier = {
+				factor = 2
+				wants_to_increase_tolerance_centaur = yes
+			}
+		}
+		event_target:target_province = {
+			add_unrest = 5
+		}
+		add_stability_or_adm_power = yes
+		small_increase_of_centaur_tolerance_effect = yes
+	}
+
+	# Ban the Disruptive Festival
+	option = {
+		name = centaur_tolerance_events.10.b
+		ai_chance = {
+			factor = 1
+			modifier = {
+				factor = 2
+				wants_to_decrease_tolerance_centaur = yes
+			}
+		}
+		event_target:target_province = {
+			add_province_modifier = {
+				name = Disruptive_Centaur_Festival_Banned # todo -5 province unrest 10 years
+				duration = 3650
+			}
+		}
+		small_decrease_of_centaur_tolerance_effect = yes
+	}
+}
+
+
+# Centaur Traders Approach Markets
+country_event = {
+	id = centaur_tolerance_events.11
+	title = centaur_tolerance_events.11.t
+	desc = centaur_tolerance_events.11.d
+	picture = todo
+
+	is_triggered_only = yes
+
+	# Trade with the Centaur Traders
+	option = {
+		name = centaur_tolerance_events.11.a
+		ai_chance = {
+			factor = 1
+			modifier = {
+				factor = 2
+				wants_to_increase_tolerance_centaur = yes
+			}
+		}
+		add_years_of_trade_income = {
+			years = 0.5
+		}
+		small_increase_of_centaur_tolerance_effect = yes
+	}
+
+	# No Trade. Go away smelly Horse-People
+	option = {
+		name = centaur_tolerance_events.11.b
+		ai_chance = {
+			factor = 1
+			modifier = {
+				factor = 2
+				wants_to_decrease_tolerance_centaur = yes
+			}
+		}
+		add_prestige = 15
+		small_decrease_of_centaur_tolerance_effect = yes
+	}
+}
+
+
+# Noble Attempts to Ride Centaur
+country_event = {
+	id = centaur_tolerance_events.12
+	title = centaur_tolerance_events.12.t
+	desc = centaur_tolerance_events.12.d
+	picture = todo
+
+	is_triggered_only = yes
+
+	# Shouldn't have tried to ride the Centaur >:(
+	option = {
+		name = centaur_tolerance_events.12.a
+		ai_chance = {
+			factor = 1
+			modifier = {
+				factor = 2
+				wants_to_increase_tolerance_centaur = yes
+			}
+			factor = 1
+			modifier = {
+				factor = 0
+				NOT = { 
+					prestige = 0
+				}
+			}
+		}
+		add_country_modifier = {
+			name = Shamed_Nobles_for_Centaur_Abuse # todo -1 yearly prestige
+			duration = 1825
+			desc = Shamed_Nobles_for_Centaur_Abuse
+		}
+		small_increase_of_centaur_tolerance_effect = yes
+	}
+
+	# Execute the Centaur
+	option = {
+		name = centaur_tolerance_events.12.b
+		ai_chance = {
+			factor = 1
+			modifier = {
+				factor = 10
+				wants_to_decrease_tolerance_centaur = yes
+			}
+			modifier = {
+				factor = 0
+				wants_to_increase_tolerance_centaur = yes
+			}
+			modifier = {
+				factor = 0
+				wants_to_maintain_tolerance_centaur = yes
+			}
+		}
+		add_prestige = 10
+		event_target:target_province = {
+			add_province_modifier = {
+				name = Centaurs_Rioting # todo monthly devastation +1.0 and +10 province unrest. 10 years
+				duration = 3650
+			}
+		}
+		largest_decrease_of_centaur_tolerance_effect = yes #suppa mad
+	}
+
+	# Punish Nobles. Enshrine Protections for Centaurs.
+	option = {
+		name = centaur_tolerance_events.12.c
+		ai_chance = {
+			factor = 1
+			modifier = {
+				factor = 5
+				wants_to_increase_tolerance_centaur = yes
+			}
+		}
+		add_estate_loyalty = {
+			estate = estate_nobles
+			loyalty = -10%
+		}
+		add_estate_influence_modifier = {
+			estate = estate_nobles
+			influence = -10%
+			duration = 3650
+		}
+		event_target:target_province = {
+			spawn_rebels = {
+				type = noble_rebels
+				size = 2
+			}
+		}
+		medium_increase_of_centaur_tolerance_effect = yes
 	}
 }
